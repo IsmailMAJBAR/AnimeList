@@ -1,5 +1,24 @@
 <%- include('navBar.ejs'); -%>
-<div >
+<%- include('messages.ejs'); -%>
+<div>
     <p class="lead mb-3">Welcome <%= user.name %></p>
 
+    <div class="card-columns">
+        <% for (var i = 1; i <= 10;  i++ ) { %>
+        <div class="card border-dark " style="width: 22rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-secondary">Anime Title (N°<%= i %>)</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <button class="btn btn-primary pull-right">Edit</button>
+                <button class="btn btn-danger pull-right">Delete</button>
+            </div>
+        </div>
+
+            <% } %>
+    </div>
+
+
+
 </div>
+
