@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const AnimeSchema = new mongoose.Schema({
     animeImage: {
         type: String,
+        required : true
     },
     title: {
         type: String,

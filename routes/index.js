@@ -22,21 +22,42 @@ router.get('/add', ensureAuthenticated, (req, res) => res.render('add'));
 // Add Handler
 router.post('/add',
     (req, res) => {
-        const {animeImage,title,description}=req.body;
-        const newAnime = new Anime({
-            animeImage,
-            title,
-            description
-        }).save().then(() => {
-            req.flash(
-                'success_msg',
-                'Anime ',title, ' was added successfully'
-            );
-            console.log(newAnime);
-            res.redirect('/home');
-        })
-            .catch(err => console.log(err));
+        const {animeImage, title, description} = req.body;
+        let errors = [];
+        if (!animeImage || !title || !description) {
+            errors.push({msg: 'Please enter all fields'});
+        }
+        if (errors.length > 0) {
+            res.render('add', {
+                errors,
+                animeImage,
+                title,
+                description
+            });
+        } else {
+            const newAnime = new Anime({
+                animeImage,
+                title,
+                description
+            });
+            newAnime
+                .save()
+                .then(() => {
+                req.flash(
+                    'success_msg',
+                    'Anime ',title, ' was added successfully'
+                );
+                console.log(newAnime);
+                res.redirect('/home');
+            })
+                .catch(err => console.log(err));
+        }
     });
+
+
+
+
+
 
 
 
