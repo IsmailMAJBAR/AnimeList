@@ -12,39 +12,54 @@ router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
 
 // home Page
 router.get('/home', ensureAuthenticated, (req, res,next) =>{
-    var resultArray = [];
     Anime.find({},(err, returnValue)=>{
         if(err){
             console.log(err);
         }
         else {
-            //console.log(returnValue);
-           /* res.render('home', {
-                user: req.user,
-
-            });*/
-            res.render('home',{returnValue:returnValue})
-
+            res.render('home',{
+                returnValue:returnValue,
+                user: req.user
+            })
         }
     });
+});
 
-    /* var cursor = Anime.find();
-    cursor.forEach((doc) =>{
-        resultArray.push(doc);
-    },() =>{
-        res.render('home', {
-            resultArray: resultArray,
-            user: req.user
-        });
+
+//Edit Handler
+router.post('/edit',(req,res)=>{
+    /* in progress
+    const id = req.body['idAnime'];
+    console.log(id);
+    console.log('delete Handler redirected to home');
+    Anime.deleteOne({_id:id},(err)=>{
+        if(err){
+            console.log(err);
+            return;
+        }else{
+            res.redirect('/home');
+        }
+
     });*/
 });
 
 
 
+//delete Handler
+router.post('/delete',(req,res)=>{
+    const id = req.body['idAnime'];
+            console.log(id);
+            console.log('delete Handler redirected to home');
+    Anime.deleteOne({_id:id},(err)=>{
+        if(err){
+            console.log(err);
+            return;
+        }else{
+            res.redirect('/home');
+        }
 
-
-
-
+    });
+});
 
 
 // Add Page
@@ -53,15 +68,16 @@ router.get('/add', ensureAuthenticated, (req, res) => res.render('add'));
 // Add Handler
 router.post('/add',
     (req, res) => {
-        const {animeImage, title, description} = req.body;
+        const {animeImage, title,category, description} = req.body;
         let errors = [];
-        if (!title || !description) {
+        if (!title || !category ||!description) {
             errors.push({msg: 'Please enter all fields'});
         }
         if (errors.length > 0) {
             res.render('add', {
                 errors,
                 animeImage,
+                category,
                 title,
                 description
             });
@@ -69,6 +85,7 @@ router.post('/add',
             const newAnime = new Anime({
                 animeImage,
                 title,
+                category,
                 description
             });
             newAnime
