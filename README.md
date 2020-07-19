@@ -1,5 +1,5 @@
-# appAnimeList
-An app that let you add to your wall animes(image,title,desc etc) so that you can show to your freinds your list of animes and enjoy a long discussion about each anime.
+# AnimeList
+An app that let you add to your wall of animes(image,title,desc etc) so that you can show to your freinds your list of animes and enjoy a long discussion about each anime.
 
 ### What you should have to run the app
 1. Nodejs
